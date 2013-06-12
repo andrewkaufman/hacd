@@ -7,6 +7,8 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <stddef.h>
+#include <stdint.h>
+#include <malloc.h>
 #include <new>
 
 // This header file provides a brief compatibility layer between the PhysX and APEX SDK foundation header files.
@@ -274,12 +276,12 @@ HACD_COMPILE_TIME_ASSERT(HACD_OFFSET_OF(PxPackValidation, a) == 8);
 namespace hacd
 {
 
-	typedef signed __int64		HaI64;
+	typedef int64_t		HaI64;
 	typedef signed int			HaI32;
 	typedef signed short		HaI16;
 	typedef signed char			HaI8;
 
-	typedef unsigned __int64	HaU64;
+	typedef uint64_t	HaU64;
 	typedef unsigned int		HaU32;
 	typedef unsigned short		HaU16;
 	typedef unsigned char		HaU8;
@@ -300,12 +302,15 @@ HACD_INLINE void * AllocAligned(size_t size,size_t alignment)
 {
 	gAllocSize+=size;
 	gAllocCount++;
-	return ::_aligned_malloc(size,alignment);
+	/// \IENote replaced ::_aligned_malloc with memalign
+	return memalign( alignment, size );
 }
 
 #define HACD_ALLOC_ALIGNED(x,y) hacd::AllocAligned(x,y)
 #define HACD_ALLOC(x) hacd::AllocAligned(x,16)
-#define HACD_FREE(x) ::_aligned_free(x)
+/// \IENote replaced ::_aligned_free with free
+/// \todo: is this safe????
+#define HACD_FREE(x) free(x)
 
 #define HACD_ASSERT(x) assert(x)
 #define HACD_ALWAYS_ASSERT() assert(0)
