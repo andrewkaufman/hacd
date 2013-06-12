@@ -32,10 +32,10 @@
 
 #pragma warning(disable:4996 4100)
 
-#include "PlatformConfigHACD.h"
+#include "HACD/public/PlatformConfigHACD.h"
 #include "wavefront.h"
-#include "HACD.h"
-#include "JobSwarm.h"
+#include "HACD/public/HACD.h"
+#include "HACD/public/JobSwarm.h"
 
 namespace HACD
 {
@@ -108,7 +108,7 @@ public:
 	hacd::HaU32		mLastPercent;
 };
 
-void main(int argc,const char ** argv)
+int main(int argc,const char ** argv)
 {
 	if ( argc == 1 )
 	{
@@ -195,12 +195,7 @@ void main(int argc,const char ** argv)
 				scan++;
 			}
 		}
-		JOB_SWARM::JobSwarmContext *jobSwarmContext = NULL;
-		if ( threadCount )
-		{
-			jobSwarmContext = JOB_SWARM::createJobSwarmContext(threadCount);
-//			jobSwarmContext->setUseThreads(false);
-		}
+		
 		HACD::gHACD = HACD::createHACD_API();
 		if  ( HACD::gHACD )
 		{
@@ -233,11 +228,6 @@ void main(int argc,const char ** argv)
 					printf("DecompositionDepth       : %d\r\n", desc.mDecompositionDepth );
 				}
 
-				if ( jobSwarmContext )
-				{
-					printf("Parallel Solver TheadCount: %d\r\n", threadCount );
-				}
-
 				if ( desc.mNormalizeInputMesh )
 				{
 					printf("Normalizing input mesh.\r\n");
@@ -250,7 +240,7 @@ void main(int argc,const char ** argv)
 
 				printf("\r\n");
 
-				desc.mJobSwarmContext = jobSwarmContext;
+				desc.mJobSwarmContext = NULL;
 
 				hacd::HaU32 hullCount = HACD::gHACD->performHACD(desc);
 
@@ -312,9 +302,7 @@ void main(int argc,const char ** argv)
 		{
 			printf("Failed to load the HACD DLL\r\n");
 		}
-		if ( jobSwarmContext )
-		{
-			JOB_SWARM::releaseJobSwarmContext(jobSwarmContext);
-		}
 	}
+	
+	return 0;
 }
