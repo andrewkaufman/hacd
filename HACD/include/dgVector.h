@@ -23,7 +23,7 @@
 #define __dgVector__
 
 #include "dgTypes.h"
-#include "dgSimd_Instrutions.h"
+#include "dgSimD_Instrutions.h"
 
 #define dgCheckVector(x) (dgCheckFloat(x[0]) && dgCheckFloat(x[1]) && dgCheckFloat(x[2]) && dgCheckFloat(x[3]))
 //#define dgCheckVector(x) true

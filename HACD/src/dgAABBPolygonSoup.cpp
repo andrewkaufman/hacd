@@ -30,7 +30,7 @@
 #include "dgList.h"
 #include "dgMatrix.h"
 #include "dgPolygonSoupBuilder.h"
-#include "dgSimd_Instrutions.h"
+#include "dgSimD_Instrutions.h"
 #include "dgAABBPolygonSoup.h"
 #include "dgIntersections.h"
 
