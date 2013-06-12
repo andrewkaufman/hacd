@@ -116,15 +116,7 @@ void dgGraph<dgNodeData, dgEdgeData>::Trace () const
 {
 	for (typename dgGraphNode<dgNodeData, dgEdgeData>::dgListNode* link = dgGraphNode<dgNodeData, dgEdgeData>::GetFirst(); link; link = link->GetNext()) {	
 		link->GetInfo().Trace ();
-//		dgTrace (("%d: ", link->GetInfo().m_index));
-//		for (dgGraphNode<dgNodeData, dgEdgeData>::dgListNode* edge = link->GetInfo().GetFirst(); edge; edge = edge->GetNext()) {	
-//			dgListNode* node;
-//			node = edge->GetInfo().m_node;
-//			dgTrace (("%d ", node->GetInfo().m_index));
-//		}
-//		dgTrace (("\n"));
 	}
-	dgTrace (("\n"));
 }
 
 
@@ -174,14 +166,10 @@ void dgGraphNode<dgNodeData, dgEdgeData>::DeleteEdge(typename dgGraphNode<dgNode
 template<class dgNodeData, class dgEdgeData> 
 void dgGraphNode<dgNodeData, dgEdgeData>::Trace () const
 {
-	dgTrace (("%d: ", m_index));
 	for (typename dgGraph<dgNodeData, dgEdgeData>::dgListNode* edge = typename dgGraph<dgNodeData, dgEdgeData>::GetFirst(); edge; edge = edge->GetNext()) {	
 		typename dgGraph<dgNodeData, dgEdgeData>::dgListNode* const node;
 		node = edge->GetInfo().m_node;
-		dgTrace (("%d ", node->GetInfo().m_index));
 	}
-	dgTrace (("\n"));
-
 }
 
 
