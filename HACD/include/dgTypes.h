@@ -26,6 +26,7 @@
 
 #include <math.h>
 #include <float.h>
+#include <string.h>
 
 #ifdef HACD_WINDOWS
 #include <Windows.h>
@@ -87,6 +88,8 @@ typedef hacd::HaU32 (*OnGetPerformanceCountCallback) ();
 class dgVector;
 class dgBigVector;
 
+/// \IENote: I have no idea what this is doing buy my buddy told me to....
+#define __cdecl  __attribute__((__cdecl__))
 #define dgApi __cdecl 	
 
 #ifdef _DEBUG
