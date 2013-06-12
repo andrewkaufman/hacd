@@ -1,0 +1,39 @@
+import os, glob
+
+import VersionControl
+VersionControl.setVersion( "IEBuild", "6.4.0" )
+import IEBuild
+
+name = 'hacd'
+majorVersion = 0
+minorVersion = 0
+patchVersion = 0
+version = '%d.%d.%d' % (majorVersion, minorVersion, patchVersion)
+
+#################################################################################
+# Install the shared library
+#################################################################################
+
+lib = IEBuild.SharedLibrary(
+	ARGUMENTS,
+	'hacd',
+	version = version,
+	source = glob.glob( "src/*.cpp" ),
+	includePath = [ "include", "public" ]
+)
+lib.setWarningsAsErrors( False )
+lib.finalize()
+
+testName = 'hacd-test'
+test = IEBuild.Program(
+	ARGUMENTS,
+	testName,
+	source = glob.glob( "../*.cpp" ),
+	includePaths = [ "HACD/include", "HACD/public" ]
+)
+test.addLibPath( "." )
+test.addLib( "hacd-"+version )
+test.setWarningsAsErrors( False )
+test.finalize()
+## \todo: this wouldn't be necessary if IEBuild.Program actually installed anything...
+IEBuild.Script( ARGUMENTS, testName, testName ).finalize()

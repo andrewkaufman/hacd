@@ -1,0 +1,7 @@
+.sconsign.dblite
+*.so
+*.os
+*.o
+HACD/hacd-test
+HACD/test.hip
+HACD/ConvexDecomposition.obj
